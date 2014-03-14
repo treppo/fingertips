@@ -1,0 +1,28 @@
+{
+  "name": "webapp-template",
+  "version": "0.0.0",
+  "description": "A reusable template for webapps",
+  "main": "src/app.coffee",
+  "directories": {
+    "test": "test"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "jasmine-node": "~1.14.2",
+    "broccoli": "^0.4.1",
+    "broccoli-static-compiler": "^0.1.2",
+    "broccoli-coffee": "^0.1.0",
+    "broccoli-es6-module-filter": "^0.1.7",
+    "grunt": "^0.4.4",
+    "grunt-broccoli-build": "0.0.3",
+    "grunt-broccoli": "^0.1.3",
+    "grunt-jasmine-node": "^0.2.1",
+    "rimraf": "^2.2.6"
+  },
+  "scripts": {
+    "test": "grunt test"
+  },
+  "private": true,
+  "author": "Christian Treppo",
+  "license": "MIT"
+}
