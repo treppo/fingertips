@@ -1,7 +1,8 @@
 module.exports = function (broccoli) {
-  var filterCoffeeScript = require('broccoli-coffee')
-  var filterES6Modules = require('broccoli-es6-module-filter')
-  var pickFiles = require('broccoli-static-compiler')
+  var filterCoffeeScript = require('broccoli-coffee');
+  var filterES6Modules = require('broccoli-es6-module-filter');
+  var pickFiles = require('broccoli-static-compiler');
+  var env = require('broccoli-env').getEnv();
 
   var compileCoffeeScript = function(treeName) {
     var tree = pickFiles(broccoli.makeTree(treeName), {
@@ -9,24 +10,26 @@ module.exports = function (broccoli) {
       destDir: treeName
     });
 
-    tree = filterCoffeeScript(tree, {
+    var filteredTree = filterCoffeeScript(tree, {
       bare: true
     })
 
-    return tree
+    return filteredTree
   }
 
-  var srcTree = compileCoffeeScript('src');
+  var scriptTrees = [compileCoffeeScript('src')];
+  var result = [];
 
-  var testTree = compileCoffeeScript('test')
+  if (env === 'development') {
+    result.push(broccoli.makeTree('public'));
+  } else {
+    scriptTrees.push(compileCoffeeScript('test'));
+  }
 
-  var sourceTrees = [srcTree, testTree]
-
-  var mergedTrees = new broccoli.MergedTree(sourceTrees)
-
-  var resultTree = filterES6Modules(mergedTrees, {
+  var transpiledScriptTree = filterES6Modules(new broccoli.MergedTree(scriptTrees), {
     moduleType: 'cjs'
   });
+  result.push(transpiledScriptTree);
 
-  return [resultTree]
+  return result
 }

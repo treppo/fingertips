@@ -1,25 +1,36 @@
-rimraf = require 'rimraf'
-
 module.exports = (grunt) ->
+  broccoli = require 'broccoli'
 
-  grunt.loadNpmTasks 'grunt-broccoli'
   grunt.loadNpmTasks 'grunt-jasmine-node'
+  grunt.loadNpmTasks 'grunt-broccoli-build'
+  grunt.loadNpmTasks 'grunt-contrib-clean'
+
+  testBuildFolder = 'test_build'
 
   grunt.initConfig
     jasmine_node:
-      all: ['build/']
+      all: [testBuildFolder]
 
-  buildFolder = 'build'
-  tempFolder = 'tmp'
+    broccoli_build:
+      default:
+        env: 'production'
 
-  grunt.registerTask 'cleanupBuild', 'Cleans up after broccoli build', ->
-    done = @async()
-    rimraf buildFolder, ->
-      rimraf tempFolder, done
+      test:
+        dest: testBuildFolder
+
+    clean:
+      tmp: ['tmp']
+      testBuild: [testBuildFolder]
 
   grunt.registerTask 'test', [
-    "broccoli:build:#{buildFolder}"
+    'broccoli_build:test'
     'jasmine_node'
-    'cleanupBuild'
+    'clean'
   ]
+
+  grunt.registerTask 'build', [
+    'broccoli_build:default'
+    'clean'
+  ]
+
   grunt.registerTask 'default', ['test']

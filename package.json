@@ -14,10 +14,11 @@
     "broccoli-coffee": "^0.1.0",
     "broccoli-es6-module-filter": "^0.1.7",
     "grunt": "^0.4.4",
-    "grunt-broccoli-build": "0.0.3",
-    "grunt-broccoli": "^0.1.3",
+    "grunt-broccoli-build": "treppo/grunt-broccoli-build",
     "grunt-jasmine-node": "^0.2.1",
-    "rimraf": "^2.2.6"
+    "rimraf": "^2.2.6",
+    "broccoli-env": "0.0.1",
+    "grunt-contrib-clean": "^0.5.0"
   },
   "scripts": {
     "test": "grunt test"
