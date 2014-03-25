@@ -1,6 +1,6 @@
-class App
+`import Hello from './hello'`
 
-  helloMessage: ->
-    "Hello, how are you?"
-
-`export default App`
+hello = new Hello
+helloMessage = document.createElement 'p'
+helloMessage.textContent = hello.message()
+document.body.appendChild helloMessage
