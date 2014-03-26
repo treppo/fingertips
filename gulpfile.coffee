@@ -6,6 +6,7 @@ clean = require 'gulp-clean'
 serve = require 'gulp-serve'
 browserify = require 'browserify'
 source = require 'vinyl-source-stream'
+sass = require 'gulp-ruby-sass'
 
 compile = (src, dest) -> ->
   gulp.src src
@@ -13,24 +14,37 @@ compile = (src, dest) -> ->
     .pipe es6ModuleTranspiler type: 'cjs'
     .pipe gulp.dest dest
 
-cleanTmp = ->
+gulp.task 'clean-up', ->
   gulp.src 'tmp', read: false
     .pipe clean()
 
-gulp.task 'scripts', compile './src/*.coffee', './tmp/src'
+gulp.task 'compile-scripts', compile './src/*.coffee', './tmp/src'
 
-gulp.task 'tests', compile './test/unit/*.coffee', './tmp/test/unit'
+gulp.task 'compile-tests', compile './test/unit/*.coffee', './tmp/test/unit'
 
-gulp.task 'jasmine', ['scripts', 'tests'], ->
+gulp.task 'test', ['compile-scripts', 'compile-tests'], ->
   gulp.src './tmp/test/unit/*.js'
     .pipe jasmine()
 
-gulp.task 'test', ['jasmine'], cleanTmp
-
-gulp.task 'browserify', ['scripts'], ->
+gulp.task 'bundle-scripts', ['compile-scripts'], ->
   browserify './tmp/src/app.js'
     .bundle standalone: 'app'
     .pipe source 'app.js'
-    .pipe gulp.dest './build'
+    .pipe gulp.dest './tmp'
 
-gulp.task 'serve', serve ['build', 'public']
+gulp.task 'compile-styles', ->
+  gulp.src './style/app.sass'
+    .pipe sass sourcemap: true
+    .pipe gulp.dest './tmp'
+
+gulp.task 'copy-public', ->
+  gulp.src './public/*'
+    .pipe gulp.dest './tmp'
+
+gulp.task 'develop', ['test', 'bundle-scripts', 'compile-styles', 'copy-public']
+
+gulp.task 'watch', ['develop'], ->
+  serve('tmp')()
+  gulp.watch 'style/*', ['compile-styles']
+  gulp.watch 'public/*', ['copy-public']
+  gulp.watch ['src/*', 'test/*'], ['test', 'bundle-scripts']

@@ -17,10 +17,11 @@
     "gulp-clean": "^0.2.4",
     "gulp-serve": "^0.2.0",
     "browserify": "^3.33.0",
-    "vinyl-source-stream": "^0.1.1"
+    "vinyl-source-stream": "^0.1.1",
+    "gulp-ruby-sass": "^0.4.0"
   },
   "scripts": {
-    "test": ""
+    "test": "gulp test"
   },
   "private": true,
   "author": "Christian Treppo",
