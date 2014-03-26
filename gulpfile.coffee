@@ -45,6 +45,6 @@ gulp.task 'develop', ['test', 'bundle-scripts', 'compile-styles', 'copy-public']
 
 gulp.task 'watch', ['develop'], ->
   serve('tmp')()
-  gulp.watch 'style/*', ['compile-styles']
-  gulp.watch 'public/*', ['copy-public']
-  gulp.watch ['src/*', 'test/*'], ['test', 'bundle-scripts']
+  gulp.watch 'style/**/*', ['compile-styles']
+  gulp.watch 'public/**/*', ['copy-public']
+  gulp.watch ['src/**/*', 'test/**/*'], ['test', 'bundle-scripts']
