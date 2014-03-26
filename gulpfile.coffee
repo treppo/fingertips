@@ -7,6 +7,7 @@ serve = require 'gulp-serve'
 browserify = require 'browserify'
 source = require 'vinyl-source-stream'
 sass = require 'gulp-ruby-sass'
+shell = require 'gulp-shell'
 
 compile = (src, dest) -> ->
   gulp.src src
@@ -48,3 +49,11 @@ gulp.task 'watch', ['develop'], ->
   gulp.watch 'style/**/*', ['compile-styles']
   gulp.watch 'public/**/*', ['copy-public']
   gulp.watch ['src/**/*', 'test/**/*'], ['test', 'bundle-scripts']
+
+gulp.task 'dist', ['bundle-scripts', 'compile-styles', 'copy-public'], ->
+  gulp.src ['./tmp/*.js', './tmp/*.css', './tmp/*.html']
+    .pipe gulp.dest './dist'
+
+gitPublish = 'git add . && git commit -m "Updated version" && git push origin gh-pages'
+
+gulp.task 'deploy', ['dist'], shell.task gitPublish, cwd: 'dist'
