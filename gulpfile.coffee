@@ -35,7 +35,9 @@ gulp.task 'bundle-scripts', ['compile-scripts'], ->
 
 gulp.task 'compile-styles', ->
   gulp.src './style/app.sass'
-    .pipe sass sourcemap: true
+    .pipe sass
+      sourcemap: true
+      quiet: true
     .pipe gulp.dest './tmp'
 
 gulp.task 'copy-public', ->

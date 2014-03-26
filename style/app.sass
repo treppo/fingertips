@@ -1,2 +1,23 @@
+@import bower_components/foundation/scss/normalize
+@import bower_components/foundation/scss/foundation
+
 body
   background-color: pink
+
+.main-container
+  +grid-row
+
+.main-nav
+  +grid-column
+
+  @media #{$medium-up}
+    +grid-column($columns: 4)
+
+.main-nav_list
+  +side-nav
+
+.main-content
+  +grid-column
+
+  @media #{$medium-up}
+    +grid-column($columns: 8)

@@ -3,4 +3,5 @@
 hello = new Hello
 helloMessage = document.createElement 'p'
 helloMessage.textContent = hello.message()
-document.body.appendChild helloMessage
+document.getElementsByClassName('main-content')[0].appendChild helloMessage
+
