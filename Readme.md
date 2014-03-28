@@ -53,6 +53,8 @@ Deployed version
 ---
 
 The deployed website can be seen at [http://treppo.org/website-template](http://treppo.org/website-template)
+The source for the deployed version can be found in the gh-pages branch of this
+repository.
 
 Organization
 ---
