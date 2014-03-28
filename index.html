@@ -6,16 +6,23 @@
     <link rel="stylesheet" href="app.css" type="text/css" />
   </head>
   <body class=main-container>
-    <nav class=main-nav>
-      <ul class=main-nav_list>
-        <li>Home</li>
-        <li>About</li>
-      </ul>
-    </nav>
-
     <main class=main-content>
-      <h1>Hello there!</h1>
-      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+      <h1>Conversion Module</h1>
+
+      <label>Enter your value
+        <input type="number" class=value-field id="input-value" value="0" />
+      </label>
+      <small id='input-error-message' class='hide'>This is not a valid input</small>
+
+      <div class='operators'>
+        <button class='operator' id='cm-to-in'>cm to in</button>
+        <button class='operator' id='in-to-cm'>in to cm</button>
+        <button class='operator' id='celsius-to-fahrenheit'>celsius to fahrenheit</button>
+        <button class='operator' id='fahrenheit-to-celsius'>fahrenheit to celsius</button>
+      </div>
+
+      <label for="output">The result</label>
+      <input type="text" id="output" value="0" readonly />
     </main>
 
     <script src="app.js"></script>
