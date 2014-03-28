@@ -17,37 +17,59 @@ view.onFahrenheitToCelsiusClick(converter.fahrenheitToCelsius);
 view.onCelsiusToFahrenheitClick(converter.celsiusToFahrenheit);
 },{"./converter":2,"./view":3}],2:[function(_dereq_,module,exports){
 "use strict";
-var Converter;
+var Converter,
+  __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
 
 Converter = (function() {
-  function Converter() {}
+  function Converter() {
+    this.fahrenheitToCelsius = __bind(this.fahrenheitToCelsius, this);
+    this.celsiusToFahrenheit = __bind(this.celsiusToFahrenheit, this);
+    this.inToCm = __bind(this.inToCm, this);
+    this.cmToIn = __bind(this.cmToIn, this);
+  }
 
   Converter.prototype.cmToIn = function(cm) {
+    if (this.isInvalid(parseFloat(cm))) {
+      return NaN;
+    }
     if (cm < 0) {
-      return false;
+      return NaN;
     }
     return cm * 0.3937;
   };
 
   Converter.prototype.inToCm = function(inch) {
+    if (this.isInvalid(parseFloat(inch))) {
+      return NaN;
+    }
     if (inch < 0) {
-      return false;
+      return NaN;
     }
     return inch / 0.3937;
   };
 
   Converter.prototype.celsiusToFahrenheit = function(c) {
+    if (this.isInvalid(parseFloat(c))) {
+      return NaN;
+    }
     if (c <= -273) {
-      return false;
+      return NaN;
     }
     return c * 1.8 + 32;
   };
 
   Converter.prototype.fahrenheitToCelsius = function(f) {
+    if (this.isInvalid(parseFloat(f))) {
+      return NaN;
+    }
     if (f <= -459.4) {
-      return false;
+      return NaN;
     }
     return (f - 32) / 1.8;
+  };
+
+  Converter.prototype.isInvalid = function(input) {
+    return typeof input !== 'number' || isNaN(input);
   };
 
   return Converter;
@@ -83,15 +105,11 @@ View = (function() {
   View.prototype.inputToOutput = function(f) {
     return (function(_this) {
       return function() {
-        var input, result;
-        input = parseFloat(_this.inputValue());
-        if (typeof input !== 'number' || isNaN(input)) {
-          _this.showError();
-        } else {
-          _this.hideError();
-        }
-        result = f(input);
-        if (!result) {
+        var result;
+        result = f(_this.inputValue());
+        console.log(result);
+        _this.hideError();
+        if (isNaN(result)) {
           _this.showError();
         }
         return _this.output(result);
@@ -109,7 +127,8 @@ View = (function() {
 
   View.prototype.showError = function() {
     document.getElementById('input-value').classList.add('error');
-    return document.getElementById('input-error-message').classList.add('error').remove('hide');
+    document.getElementById('input-error-message').classList.add('error');
+    return document.getElementById('input-error-message').classList.remove('hide');
   };
 
   View.prototype.hideError = function() {
