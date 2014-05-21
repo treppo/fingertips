@@ -1,7 +1,6 @@
 `import Hello from './hello'`
+`import View from './view'`
 
 hello = new Hello
-helloMessage = document.createElement 'p'
-helloMessage.textContent = hello.message()
-document.getElementsByClassName('main-content')[0].appendChild helloMessage
-
+view = new View hello
+view.render()

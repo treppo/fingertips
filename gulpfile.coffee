@@ -15,7 +15,7 @@ compile = (src, dest) -> ->
     .pipe es6ModuleTranspiler type: 'cjs'
     .pipe gulp.dest dest
 
-gulp.task 'clean-up', ->
+gulp.task 'clean', ->
   gulp.src 'tmp', read: false
     .pipe clean()
 
@@ -44,9 +44,9 @@ gulp.task 'copy-public', ->
   gulp.src './public/*'
     .pipe gulp.dest './tmp'
 
-gulp.task 'develop', ['test', 'bundle-scripts', 'compile-styles', 'copy-public']
+gulp.task 'dev', ['test', 'bundle-scripts', 'compile-styles', 'copy-public']
 
-gulp.task 'watch', ['develop'], ->
+gulp.task 'watch', ['dev'], ->
   serve('tmp')()
   gulp.watch 'style/**/*', ['compile-styles']
   gulp.watch 'public/**/*', ['copy-public']
