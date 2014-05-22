@@ -1,10 +1,24 @@
-{div, input, button, ul, li} = React.DOM
+{div, form, input, button, ul, li} = React.DOM
 
 Search = React.createClass
+  getInitialState: ->
+    term: ''
+
+  handleChange: (event) ->
+    @setState term: event.target.value
+
+  onSubmit: (event) ->
+    event.preventDefault()
+    @props.onSubmit @refs.search.getDOMNode().value
+
   render: ->
-    div {},
-      input type: 'search'
-      button type: 'submit', 'Search'
+    form onSubmit: @onSubmit,
+      input
+        type: 'search'
+        ref: 'search'
+        value: @state.term
+        onChange: @handleChange
+      button type: 'search', 'Search'
 
 Results = React.createClass
   render: ->
@@ -15,18 +29,20 @@ Results = React.createClass
 
 Fingertips = React.createClass
   getInitialState: ->
-    results: ['Track 1', 'Track 2']
+    results: []
+
+  search: (term) ->
+    @setState results: @props.musicService.search term
 
   render: ->
     div {},
-      @props.message
-      Search {}
+      Search onSubmit: @search
       Results results: @state.results
 
 class View
-  constructor: (@messenger) ->
+  constructor: ({@musicService}) ->
 
   render: ->
-    React.renderComponent (Fingertips message: @messenger.message()), document.getElementById 'app'
+    React.renderComponent (Fingertips musicService: @musicService), document.getElementById 'app'
 
 `export default View`
