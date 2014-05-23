@@ -19,12 +19,10 @@ gulp.task 'clean', ->
   gulp.src 'tmp', read: false
     .pipe clean()
 
-gulp.task 'compile-scripts', compile './src/*.coffee', './tmp/src'
+gulp.task 'compile-scripts', compile './src/**/*.coffee', './tmp/src'
 
-gulp.task 'compile-tests', compile './test/unit/*.coffee', './tmp/test/unit'
-
-gulp.task 'test', ['compile-scripts', 'compile-tests'], ->
-  gulp.src './tmp/test/unit/*.js'
+gulp.task 'test', ['compile-scripts'], ->
+  gulp.src './tmp/src/**/__tests__/*test.js'
     .pipe jasmine()
 
 gulp.task 'bundle-scripts', ['compile-scripts'], ->

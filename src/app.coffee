@@ -1,6 +1,6 @@
-`import Hello from './hello'`
+`import MusicService from './music_service'`
 `import View from './view'`
 
-hello = new Hello
-view = new View hello
+musicService = new MusicService
+view = new View musicService: musicService
 view.render()

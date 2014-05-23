@@ -1,23 +1,26 @@
 {div, form, input, button, ul, li} = React.DOM
 
-Search = React.createClass
+SearchField = React.createClass
   getInitialState: ->
-    term: ''
+    value: ''
 
   handleChange: (event) ->
-    @setState term: event.target.value
+    @setState value: event.target.value
 
+  render: ->
+    input
+      type: 'search'
+      value: @state.value
+      onChange: @handleChange
+
+SearchForm = React.createClass
   onSubmit: (event) ->
     event.preventDefault()
     @props.onSubmit @refs.search.getDOMNode().value
 
   render: ->
     form onSubmit: @onSubmit,
-      input
-        type: 'search'
-        ref: 'search'
-        value: @state.term
-        onChange: @handleChange
+      SearchField ref: 'search'
       button type: 'search', 'Search'
 
 Results = React.createClass
@@ -36,7 +39,7 @@ Fingertips = React.createClass
 
   render: ->
     div {},
-      Search onSubmit: @search
+      SearchForm onSubmit: @search
       Results results: @state.results
 
 class View
