@@ -35,7 +35,10 @@ Fingertips = React.createClass
     results: []
 
   search: (term) ->
-    @setState results: @props.musicService.search term
+    @props.musicService
+      .search term
+      .then (results) =>
+        @setState results: results
 
   render: ->
     div {},

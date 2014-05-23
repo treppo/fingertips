@@ -9,19 +9,22 @@ source = require 'vinyl-source-stream'
 sass = require 'gulp-ruby-sass'
 shell = require 'gulp-shell'
 
-compile = (src, dest) -> ->
-  gulp.src src
-    .pipe coffee bare: true
-    .pipe es6ModuleTranspiler type: 'cjs'
-    .pipe gulp.dest dest
-
 gulp.task 'clean', ->
   gulp.src 'tmp', read: false
     .pipe clean()
 
-gulp.task 'compile-scripts', compile './src/**/*.coffee', './tmp/src'
+gulp.task 'compile-scripts', ->
+  gulp.src './src/**/*.coffee'
+    .pipe coffee bare: true
+    .pipe es6ModuleTranspiler type: 'cjs'
+    .pipe gulp.dest './tmp/src'
 
-gulp.task 'test', ['compile-scripts'], ->
+gulp.task 'copy-js', ->
+  gulp.src './src/**/*.js'
+    .pipe es6ModuleTranspiler type: 'cjs'
+    .pipe gulp.dest './tmp/src'
+
+gulp.task 'test', ['copy-js','compile-scripts'], ->
   gulp.src './tmp/src/**/__tests__/*test.js'
     .pipe jasmine()
 

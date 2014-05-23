@@ -3,21 +3,27 @@
 describe 'Scout', ->
   provider =
     search: (term) ->
-      artist: term
+      then: (func) ->
+        func artist: term
 
   mapper =
     map: (obj) ->
-      obj
+      then: (func) ->
+        func [obj]
 
   it 'asks the provider for music and maps the response with the mapper', ->
     term = 'talking heads'
     expected =
-      artist: 'talking heads'
+      [artist: 'talking heads']
+    actual = []
 
-    result = Scout.search
-      provider: provider
-      mapper: mapper
-      term: term
+    Scout
+      .search
+        provider: provider
+        mapper: mapper
+        term: term
+      .then (results) ->
+        actual = results
 
-    expect result
+    expect actual
       .toEqual expected

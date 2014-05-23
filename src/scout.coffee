@@ -1,5 +1,7 @@
 Scout =
   search: ({provider, mapper, term}) ->
-    mapper.map provider.search term
+    provider
+      .search term
+      .then mapper.map
 
 `export default Scout`

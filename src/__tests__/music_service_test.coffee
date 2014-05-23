@@ -1,16 +1,37 @@
-`import MusicService from '../music_service'`
-`import Record from '../record'`
+`import MusicService from '../music_service'
+import responseFixture from './rdio_response_fixture'
+import Record from '../record'`
 
 describe 'MusicService', ->
 
   beforeEach ->
-    @it = new MusicService
+    # unfortunately the rdio library has to be mocked, as it needs a DOM
+    global.R =
+      request: (config) ->
+        config.success responseFixture
+    @service = new MusicService
 
   it 'searches results for a term', ->
     searchTerm = 'talking heads once in a lifetime'
-    result = new Record
+    record1 = new Record
       artist: 'Talking Heads'
-      title: 'Once in a lifetime'
+      title: 'Once In A Lifetime'
+    record2 = new Record
+      artist: 'Talking Heads'
+      title: 'Once In A Lifetime (2005 Remastered Album Version)'
+    actual = 0
+    isDone = false
 
-    expect @it.search searchTerm
-      .toContain result
+    runs ->
+      @service
+        .search searchTerm
+        .then (results) ->
+          actual = results
+          isDone = true
+
+    waitsFor ->
+      isDone
+
+    runs ->
+      expect actual
+        .toEqual [record1, record2]

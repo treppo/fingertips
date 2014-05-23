@@ -20,7 +20,7 @@
     "gulp-ruby-sass": "^0.4.3",
     "gulp-serve": "^0.2.0",
     "gulp-shell": "^0.2.4",
-    "jasmine-node": "~1.14.2",
+    "q": "^1.0.1",
     "react": "^0.10.0",
     "vinyl-source-stream": "^0.1.1"
   },
