@@ -7,7 +7,7 @@ describe 'MusicService', ->
     @it = new MusicService
 
   it 'searches results for a term', ->
-    searchTerm = 'talking heads'
+    searchTerm = 'talking heads once in a lifetime'
     result = new Record
       artist: 'Talking Heads'
       title: 'Once in a lifetime'
