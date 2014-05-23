@@ -8,7 +8,7 @@ Rdio =
       method: 'search'
       content:
         types: 'track'
-        query: 'talking heads'
+        query: term
       success: (response) ->
         deferred.resolve response
       error: (error) ->
