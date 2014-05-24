@@ -1,6 +1,6 @@
 `import MusicService from '../music_service'
-import responseFixture from './rdio_response_fixture'
-import Record from '../record'`
+import recordList from './rdio_record_list'
+import responseFixture from './rdio_response_fixture'`
 
 describe 'MusicService', ->
 
@@ -13,12 +13,6 @@ describe 'MusicService', ->
 
   it 'searches results for a term', ->
     searchTerm = 'talking heads once in a lifetime'
-    record1 = new Record
-      artist: 'Talking Heads'
-      title: 'Once In A Lifetime'
-    record2 = new Record
-      artist: 'Talking Heads'
-      title: 'Once In A Lifetime (2005 Remastered Album Version)'
     actual = 0
     isDone = false
 
@@ -31,7 +25,8 @@ describe 'MusicService', ->
 
     waitsFor ->
       isDone
+    , 'loading results', 1000
 
     runs ->
       expect actual
-        .toEqual [record1, record2]
+        .toEqual recordList

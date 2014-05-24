@@ -13,7 +13,7 @@ var response = {
      "key": "sr2244098"
     },
     "artistUrl": "/artist/Talking_Heads/",
-    "duration": 259,
+    "duration": 241,
     "album": "The Best Of Talking Heads",
     "isClean": false,
     "albumUrl": "/artist/Talking_Heads/album/The_Best_Of_Talking_Heads/",

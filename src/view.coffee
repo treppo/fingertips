@@ -1,4 +1,4 @@
-{div, form, input, button, ul, li} = React.DOM
+{div, form, input, button, ul, li, img} = React.DOM
 
 SearchField = React.createClass
   getInitialState: ->
@@ -26,9 +26,15 @@ SearchForm = React.createClass
 Results = React.createClass
   render: ->
     createListItem = (result) ->
-      li {}, result
+      li {},
+        img src: result.img
+        div {},
+          result.title
+        div {},
+          'by '
+          result.artist
 
-    ul {}, @props.results.map createListItem
+    ul className: 'small-block-grid-1 medium-block-grid-3', @props.results.map createListItem
 
 Fingertips = React.createClass
   getInitialState: ->
