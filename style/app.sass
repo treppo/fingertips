@@ -3,21 +3,27 @@
 
 body
   background-color: pink
-
-.main-container
-  +grid-row
-
-.main-nav
-  +grid-column
-
-  @media #{$medium-up}
-    +grid-column($columns: 4)
-
-.main-nav_list
-  +side-nav
+  padding-top: 4em
 
 .main-content
-  +grid-column
+  +grid-row
+
+.content-column
+  +grid-column(12)
+
+.result-list
+  +block-grid(1)
 
   @media #{$medium-up}
-    +grid-column($columns: 8)
+    +block-grid(3)
+
+.result
+  &__title
+    background-color: white
+    padding-left: 0.5em
+    font-weight: bold
+    padding-top: 1em
+  &__artist
+    background-color: white
+    padding-left: 0.5em
+    padding-bottom: 1em

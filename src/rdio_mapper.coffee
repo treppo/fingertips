@@ -11,11 +11,11 @@ toMinutesString = (seconds) ->
   "#{ Math.floor(seconds / 60) }:#{ sec }"
 
 
-recordsFromResult = ({artist, name, icon, key, duration}) ->
+recordsFromResult = ({artist, name, icon400, key, duration}) ->
   new Record
     artist: artist
     title: name
-    img: icon
+    img: icon400
     id: key
     duration: toMinutesString duration
 

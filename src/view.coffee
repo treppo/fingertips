@@ -19,22 +19,23 @@ SearchForm = React.createClass
     @props.onSubmit @refs.search.getDOMNode().value
 
   render: ->
-    form onSubmit: @onSubmit,
-      SearchField ref: 'search'
-      button type: 'search', 'Search'
+    form className: 'row collapse', onSubmit: @onSubmit,
+      div className: 'small-9 medium-11 columns',
+        SearchField ref: 'search'
+      div className: 'small-3 medium-1 columns',
+        button className: 'postfix', type: 'submit', 'Search'
 
 Results = React.createClass
   render: ->
     createListItem = (result) ->
-      li {},
-        img src: result.img
-        div {},
+      li className: 'result',
+        img src: result.img, className: 'result__image'
+        div className: 'result__title',
           result.title
-        div {},
-          'by '
+        div className: 'result__artist',
           result.artist
 
-    ul className: 'small-block-grid-1 medium-block-grid-3', @props.results.map createListItem
+    ul className: 'result-list', @props.results.map createListItem
 
 Fingertips = React.createClass
   getInitialState: ->
@@ -47,7 +48,7 @@ Fingertips = React.createClass
         @setState results: results
 
   render: ->
-    div {},
+    div className: 'content-column',
       SearchForm onSubmit: @search
       Results results: @state.results
 
