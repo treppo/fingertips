@@ -1,5 +1,9 @@
 {div, form, input, button, ul, li, img} = React.DOM
 
+initialResult =
+  title: 'Search for any track you like,'
+  artist: '25 million songs are at your fingertips.'
+
 SearchField = React.createClass
   getInitialState: ->
     value: ''
@@ -9,9 +13,11 @@ SearchField = React.createClass
 
   render: ->
     input
+      className: 'search-field'
       type: 'search'
       value: @state.value
       onChange: @handleChange
+      placeholder: 'e.g. Talking Heads Once In A Lifetime'
 
 SearchForm = React.createClass
   onSubmit: (event) ->
@@ -23,7 +29,7 @@ SearchForm = React.createClass
       div className: 'small-9 medium-11 columns',
         SearchField ref: 'search'
       div className: 'small-3 medium-1 columns',
-        button className: 'postfix', type: 'submit', 'Search'
+        button className: 'search-button', type: 'submit', 'Search'
 
 Results = React.createClass
   render: ->
@@ -39,7 +45,7 @@ Results = React.createClass
 
 Fingertips = React.createClass
   getInitialState: ->
-    results: []
+    results: [initialResult]
 
   search: (term) ->
     @props.musicService

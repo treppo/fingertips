@@ -1,15 +1,28 @@
+$body-bg: pink
+$primary-color: adjust-hue($body-bg, 240)
+$secondary-color: adjust-hue($body-bg, 120)
+
 @import bower_components/foundation/scss/normalize
 @import bower_components/foundation/scss/foundation
 
+
 body
-  background-color: pink
-  padding-top: 4em
+  padding-top: 3rem
 
 .main-content
   +grid-row
 
 .content-column
   +grid-column(12)
+
+.search-field
+  font-size: 1.2rem !important
+  height: 2.5rem !important
+
+.search-button
+  +prefix-postfix-base
+  +postfix
+  height: 2.5rem !important
 
 .result-list
   +block-grid(1)
@@ -20,10 +33,10 @@ body
 .result
   &__title
     background-color: white
-    padding-left: 0.5em
+    padding-left: 0.5rem
     font-weight: bold
-    padding-top: 1em
+    padding-top: 1rem
   &__artist
     background-color: white
-    padding-left: 0.5em
-    padding-bottom: 1em
+    padding-left: 0.5rem
+    padding-bottom: 1rem
