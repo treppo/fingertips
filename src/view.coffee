@@ -34,8 +34,14 @@ SearchForm = React.createClass
 Results = React.createClass
   render: ->
     createListItem = (result) ->
-      li className: 'result',
+      isCurrentTrack = result.id is @props.currentTrack
+      currentClass = if isCurrentTrack then 'current-track' else ''
+      pausedClass = if isCurrentTrack and @props.isPaused then 'is-paused' else ''
+
+      li className: "result #{currentClass} #{pausedClass}",
         a className: 'result__link', onClick: @props.onClick.bind(null, result.id),
+          div className: 'result__overlay',
+            '‖'
           img src: result.img, className: 'result__image'
           div className: 'result__title',
             result.title
@@ -47,6 +53,8 @@ Results = React.createClass
 Fingertips = React.createClass
   getInitialState: ->
     results: [initialResult]
+    currentTrack: ''
+    isPaused: false
 
   search: (term) ->
     @props.musicService
@@ -55,12 +63,22 @@ Fingertips = React.createClass
         @setState results: results
 
   play: (trackId) ->
-    @props.player.play trackId
+    if @state.currentTrack is trackId
+      @props.player.togglePause()
+      @setState isPaused: not @state.isPaused
+    else
+      @setState isPaused: false
+      @setState currentTrack: trackId
+      @props.player.play trackId
 
   render: ->
     div className: 'content-column',
       SearchForm onSubmit: @search
-      Results results: @state.results, onClick: @play
+      Results
+        results: @state.results
+        onClick: @play
+        currentTrack: @state.currentTrack
+        isPaused: @state.isPaused
 
 class View
   constructor: ({@musicService, @player}) ->

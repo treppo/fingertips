@@ -31,6 +31,10 @@ body
     +block-grid(3)
 
 .result
+  &.current-track
+    position: relative
+  &__image
+    min-width: 100%
   &__link
     color: $body-font-color
   &__title
@@ -42,3 +46,25 @@ body
     background-color: white
     padding-left: 0.5rem
     padding-bottom: 1rem
+  &__overlay
+    display: none
+    position: absolute
+    top: 0
+    left: 0
+    bottom: 0
+    right: 0
+    margin: auto
+    width: 4.5rem
+    height: 4.5rem
+    line-height: 4.5rem
+    font-size: 3rem
+    font-weight: bold
+    text-align: center
+    border-radius: 50%
+    background-color: $secondary-color
+
+    .current-track.is-paused &
+      display: none
+
+    .current-track &
+      display: block
