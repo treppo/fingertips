@@ -7,6 +7,8 @@ describe 'MusicService', ->
   beforeEach ->
     # unfortunately the rdio library has to be mocked, as it needs a DOM
     global.R =
+      ready: (func) ->
+        func()
       request: (config) ->
         config.success responseFixture
     @service = new MusicService
