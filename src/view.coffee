@@ -1,4 +1,4 @@
-{div, form, input, button, ul, li, img} = React.DOM
+{a, div, form, input, button, ul, li, img} = React.DOM
 
 initialResult =
   title: 'Search for any track you like,'
@@ -35,13 +35,14 @@ Results = React.createClass
   render: ->
     createListItem = (result) ->
       li className: 'result',
-        img src: result.img, className: 'result__image'
-        div className: 'result__title',
-          result.title
-        div className: 'result__artist',
-          result.artist
+        a className: 'result__link', onClick: @props.onClick.bind(null, result.id),
+          img src: result.img, className: 'result__image'
+          div className: 'result__title',
+            result.title
+          div className: 'result__artist',
+            result.artist
 
-    ul className: 'result-list', @props.results.map createListItem
+    ul className: 'result-list', @props.results.map createListItem.bind this
 
 Fingertips = React.createClass
   getInitialState: ->
@@ -53,15 +54,18 @@ Fingertips = React.createClass
       .then (results) =>
         @setState results: results
 
+  play: (trackId) ->
+    @props.player.play trackId
+
   render: ->
     div className: 'content-column',
       SearchForm onSubmit: @search
-      Results results: @state.results
+      Results results: @state.results, onClick: @play
 
 class View
-  constructor: ({@musicService}) ->
+  constructor: ({@musicService, @player}) ->
 
   render: ->
-    React.renderComponent (Fingertips musicService: @musicService), document.getElementById 'app'
+    React.renderComponent (Fingertips musicService: @musicService, player: @player), document.getElementById 'app'
 
 `export default View`
