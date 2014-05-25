@@ -1,10 +1,10 @@
-Website Template
+Fingertips
 ===
 
 Installation
 ---
 
-You will Node and Ruby installed to use all required tools.
+You will need Node and Ruby installed to use all required tools.
 
 To begin, install all Npm modules
 
@@ -52,7 +52,7 @@ The resulting, compiled files can be found in the dist folder.
 Deployed version
 ---
 
-The deployed website can be seen at [http://treppo.org/website-template](http://treppo.org/website-template)
+The deployed website can be seen at [http://treppo.org/fingertips](http://treppo.org/fingertips)
 The source for the deployed version can be found in the gh-pages branch of this
 repository.
 
@@ -60,11 +60,11 @@ Organization
 ---
 
 All source and test files are written in Coffeescript and can be located in the
-src and test directories. They use the module system the coming ECMA–Script
+src directory. They use the module system of the coming ECMA–Script
 version 6 (ES6). Because this standard is not final yet and therefore not supported
-by browsers, the files are transpiled to ES5, and using the Node Common–JS/require syntax.
-This is handy because for the unit tests to run with Node, this syntax is
-used already and no library is needed. To support the Common–JS in the browser,
+by browsers, the files are transpiled to ES5, and using the Node/Common–JS/require syntax.
+This is handy because for the unit tests to run with Node–Jasmine, this syntax is
+used already and no library is needed. To support the Common–JS syntax in the browser,
 this template uses the Browserify library, that bundles up all required modules,
 that are needed for the website. The result is a single file containing all JS.
 
