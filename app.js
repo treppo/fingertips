@@ -2026,7 +2026,7 @@ Rdio = {
           return deferred.resolve(response);
         },
         error: function(error) {
-          return deferred.reject(new Error(error));
+          return deferred.reject(error.message);
         }
       });
     });
@@ -2177,30 +2177,41 @@ SearchForm = React.createClass({
 Results = React.createClass({
   render: function() {
     var createListItem;
-    createListItem = function(result) {
-      var currentClass, isCurrentTrack, pausedClass;
-      isCurrentTrack = result.id === this.props.currentTrack;
-      currentClass = isCurrentTrack ? 'current-track' : '';
-      pausedClass = isCurrentTrack && this.props.isPaused ? 'is-paused' : '';
-      return li({
-        className: "result " + currentClass + " " + pausedClass
-      }, a({
-        className: 'result__link',
-        onClick: this.props.onClick.bind(null, result.id)
-      }, div({
-        className: 'result__overlay'
-      }, '‖'), img({
-        src: result.img,
-        className: 'result__image'
-      }), div({
-        className: 'result__title'
-      }, result.title), div({
-        className: 'result__artist'
-      }, result.artist)));
-    };
-    return ul({
-      className: 'result-list'
-    }, this.props.results.map(createListItem.bind(this)));
+    createListItem = (function(_this) {
+      return function(result) {
+        var currentClass, isCurrentTrack, pausedClass;
+        isCurrentTrack = result.id === _this.props.currentTrack;
+        currentClass = isCurrentTrack ? 'current-track' : '';
+        pausedClass = isCurrentTrack && _this.props.isPaused ? 'is-paused' : '';
+        return li({
+          className: "result " + currentClass + " " + pausedClass
+        }, a({
+          className: 'result__link',
+          onClick: _this.props.onClick.bind(null, result.id)
+        }, div({
+          className: 'result__overlay'
+        }, '‖'), img({
+          src: result.img,
+          className: 'result__image'
+        }), div({
+          className: 'result__title'
+        }, result.title), div({
+          className: 'result__artist'
+        }, result.artist)));
+      };
+    })(this);
+    if (this.props.results.length > 0) {
+      return ul({
+        className: 'result-list'
+      }, this.props.results.map(createListItem));
+    } else {
+      return ul({
+        className: 'result-list'
+      }, createListItem({
+        title: 'No tracks found',
+        artist: 'Please try a different search'
+      }));
+    }
   }
 });
 
@@ -2213,13 +2224,22 @@ Fingertips = React.createClass({
     };
   },
   search: function(term) {
-    return this.props.musicService.search(term).then((function(_this) {
-      return function(results) {
-        return _this.setState({
-          results: results
-        });
-      };
-    })(this));
+    return this.props.musicService.search(term).then(this.setResults, this.showError);
+  },
+  setResults: function(results) {
+    return this.setState({
+      results: results
+    });
+  },
+  showError: function(message) {
+    return this.setState({
+      results: [
+        {
+          title: 'Oooops',
+          artist: message
+        }
+      ]
+    });
   },
   play: function(trackId) {
     if (this.state.currentTrack === trackId) {
