@@ -13,7 +13,7 @@ Rdio =
         success: (response) ->
           deferred.resolve response
         error: (error) ->
-          deferred.reject new Error error
+          deferred.reject error.message
 
     deferred.promise
 

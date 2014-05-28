@@ -59,8 +59,13 @@ Fingertips = React.createClass
   search: (term) ->
     @props.musicService
       .search term
-      .then (results) =>
-        @setState results: results
+      .then @setResults, @showError
+
+  setResults: (results) ->
+    @setState results: results
+
+  showError: (message) ->
+    @setState results: [title: 'Oooops', artist: message]
 
   play: (trackId) ->
     if @state.currentTrack is trackId
