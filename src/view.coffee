@@ -33,7 +33,7 @@ SearchForm = React.createClass
 
 Results = React.createClass
   render: ->
-    createListItem = (result) ->
+    createListItem = (result) =>
       isCurrentTrack = result.id is @props.currentTrack
       currentClass = if isCurrentTrack then 'current-track' else ''
       pausedClass = if isCurrentTrack and @props.isPaused then 'is-paused' else ''
@@ -48,7 +48,13 @@ Results = React.createClass
           div className: 'result__artist',
             result.artist
 
-    ul className: 'result-list', @props.results.map createListItem.bind this
+    if @props.results.length > 0
+      ul className: 'result-list', @props.results.map createListItem
+    else
+      ul className: 'result-list',
+        createListItem
+          title: 'No tracks found'
+          artist: 'Please try a different search'
 
 Fingertips = React.createClass
   getInitialState: ->
